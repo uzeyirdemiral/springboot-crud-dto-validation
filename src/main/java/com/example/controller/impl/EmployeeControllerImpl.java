@@ -2,11 +2,10 @@ package com.example.controller.impl;
 
 import com.example.controller.IEmployeeController;
 import com.example.dto.DtoEmployee;
+import com.example.dto.DtoEmployeeIU;
 import com.example.services.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,9 +17,35 @@ public class EmployeeControllerImpl implements IEmployeeController {
     private IEmployeeService employeeService;
 
 
+    @PostMapping("/save")
+    @Override
+    public DtoEmployee saveEmployee(@RequestBody DtoEmployeeIU dtoEmployeeIU) {
+        return employeeService.saveEmployee(dtoEmployeeIU);
+    }
+
     @GetMapping("/list")
     @Override
     public List<DtoEmployee> findAllEmployees() {
         return employeeService.findAllEmployees();
+    }
+
+
+    @GetMapping("list/{id}")
+    @Override
+    public DtoEmployee findByEmployeeId(@PathVariable(name = "id") Long id) {
+        return employeeService.findByEmployeeId(id);
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    @Override
+    public void deleteEmployee(@PathVariable(name = "id") Long id) {
+        employeeService.deleteEmployee(id);
+    }
+
+    @PutMapping("/update/{id}")
+    @Override
+    public DtoEmployee updateEmployee(@PathVariable(name = "id") Long id, @RequestBody DtoEmployeeIU dtoEmployeeIU) {
+        return employeeService.updateEmployee(id, dtoEmployeeIU);
     }
 }
