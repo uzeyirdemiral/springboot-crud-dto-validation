@@ -20,7 +20,7 @@ public class Customer {
     private String name;
 
 
-    @OneToOne                //ilişkinin sahibi
+    @OneToOne (cascade = CascadeType.ALL)                //ilişkinin sahibi
     private Address address;
 
 }
